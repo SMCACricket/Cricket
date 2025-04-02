@@ -67,7 +67,7 @@ select {
 
     <script>
         function updateTeamDropdown() {
-            fetch('https://script.google.com/macros/s/AKfycbwaa6jchrWqB9ZEkXtAbXROVOyB7lMizjOGprX5ut1xxmDjphiGKKvvKKk_ar3Mkuyy/exec')
+            fetch('https://script.google.com/macros/s/AKfycbwwz1h1t_WU172dEwU_xF4Ujgx58nstT8x5nbHvwDZ296dMotF3NcgKa59G5B5XF5iRdg/exec')
             .then(response => response.json())
             .then(data => {
                 var teamOptions = [];
@@ -100,14 +100,14 @@ select {
 		var region = encodeURIComponent(document.getElementById('region').value);
 		var team= encodeURIComponent(document.getElementById('team').value);
 
-		 fetch('https://script.google.com/macros/s/AKfycbwaa6jchrWqB9ZEkXtAbXROVOyB7lMizjOGprX5ut1xxmDjphiGKKvvKKk_ar3Mkuyy/exec', {
+		 fetch('https://script.google.com/macros/s/AKfycbwwz1h1t_WU172dEwU_xF4Ujgx58nstT8x5nbHvwDZ296dMotF3NcgKa59G5B5XF5iRdg/exec', {
                 method: 'POST', mode: 'cors',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ region: region, team: team })
             })
-            .then(response => response.text())
+            .then(response => response.json())
             .then(data => {
                 alert("Data saved successfully!");
                 document.getElementById('customForm').reset();
