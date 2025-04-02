@@ -67,7 +67,7 @@ select {
 
     <script>
         function updateTeamDropdown() {
-            fetch('https://script.google.com/macros/s/AKfycbwVQmpZi9ZVS4fHJkkCZXqLR1i4DN69jr4_2_GHc6uD0D5tCUNJe6Cbiujz6b1jGUSPXg/exec')
+            fetch('https://script.google.com/macros/s/AKfycbwxxz9nbeOeHQsB6HJUrusZ_C_77ai7qj3xw1mCzTtImMqBa4lG0q2kXUCEWkkg1jmdUQ/exec')
             .then(response => response.json())
             .then(data => {
                 var teamOptions = [];
@@ -93,23 +93,26 @@ select {
 
         document.getElementById('region').addEventListener('change', updateTeamDropdown);
 
-	<!--document.getElementById('customForm').addEventListener('submit', function(event){
+	document.getElementById('customForm').addEventListener('submit', function(event) {
+  event.preventDefault();
 
-		event.preventDefault();
-var formId = "1CARwSIqjQKzaYRl0d6LvdCcrUWPcO0srN4TAjK72Iso";
-  var form = FormApp.openById(formId);
+  var region = document.getElementById('region').value;
+  var team = document.getElementById('team').value;
 
-  var regionEntryId = "entry.303646027";
-  var teamEntryId = "entry.1633013212";
+  var url = 'https://script.google.com/macros/s/AKfycbwxxz9nbeOeHQsB6HJUrusZ_C_77ai7qj3xw1mCzTtImMqBa4lG0q2kXUCEWkkg1jmdUQ/doFormSubmit?region=' + encodeURIComponent(region) + '&team=' + encodeURIComponent(team);
 
-  var itemRegion = form.getItemById(form.getItemIds()[0]).asListItem();
-  var itemTeam = form.getItemById(form.getItemIds()[1]).asListItem();
-
-  form.createResponse().withItemResponse(itemRegion.createResponse(region))
-                        .withItemResponse(itemTeam.createResponse(region))
-                        .submit();
-
-});-->
+  fetch(url, {
+      method: 'GET',
+      mode: 'cors'
+    })
+    .then((response) => response.text())
+    .then((data) => {
+      alert(data);
+    })
+    .catch((error) => {
+      alert('Error: ' + error);
+    });
+});
 
 	
     </script>
