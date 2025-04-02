@@ -5,6 +5,7 @@
 </head>
 <body>
     <form id="customForm" action="https://docs.google.com/forms/d/e/1FAIpQLScQLe5MZjSO48_B8I9yTB4FkkhhsJmL0Ai_9ytTgCXg4yfTJQ/viewform?usp=pp_url&entry.303646027=&entry.1633013212=" method="GET">
+
 				  
         <label for="region">Division:</label>
         <select id="region" name="entry.303646027">
@@ -52,6 +53,18 @@
         }
 
         document.getElementById('region').addEventListener('change', updateTeamDropdown);
+
+	document.getElementById('customForm').addEventListener('submit', function(event){
+
+		event.preventDefault();
+
+		var region = encodeURIComponent(document.getElementById('region').value);
+		var team= encodeURIComponent(document.getElementById('team').value);
+
+		var googleFormURL = "https://docs.google.com/forms/d/e/1FAIpQLScQLe5MZjSO48_B8I9yTB4FkkhhsJmL0Ai_9ytTgCXg4yfTJQ/viewform?usp=pp_url&entry.303646027="+ region +"&entry.1633013212=" +team ;
+		window.location.href = googleFormURL;
+
+		});
     </script>
 </body>
 </html>
