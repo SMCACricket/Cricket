@@ -62,7 +62,7 @@
 		var team= encodeURIComponent(document.getElementById('team').value);
 
 		 fetch('https://script.google.com/macros/s/AKfycbytZI3jjiBL1S34Eq3sXWxUzm7UF1ZMZkpJkeF6ZFyW1GkY-cdU2lUlG-4g10BhL48/exec', {
-                method: 'POST',
+                method: 'POST', mode: 'cors',
                 headers: {
                     'Content-Type': 'application/json'
                 },
