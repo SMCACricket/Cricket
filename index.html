@@ -67,7 +67,7 @@ select {
 
     <script>
         function updateTeamDropdown() {
-            fetch('https://script.google.com/macros/s/AKfycbwxxz9nbeOeHQsB6HJUrusZ_C_77ai7qj3xw1mCzTtImMqBa4lG0q2kXUCEWkkg1jmdUQ/exec')
+            fetch('https://script.google.com/macros/s/AKfycbwlz_aIClqoIxIOrpdDwYtE4d4VBk48EHc7KGkZDuF9YI1f6Rk-MrVGFlSG0eoX_v6ofw/exec')
             .then(response => response.json())
             .then(data => {
                 var teamOptions = [];
@@ -99,7 +99,7 @@ select {
   var region = document.getElementById('region').value;
   var team = document.getElementById('team').value;
 
-  var url = 'https://script.google.com/macros/s/AKfycbwxxz9nbeOeHQsB6HJUrusZ_C_77ai7qj3xw1mCzTtImMqBa4lG0q2kXUCEWkkg1jmdUQ/doFormSubmit?region=' + encodeURIComponent(region) + '&team=' + encodeURIComponent(team);
+  var url = 'https://script.google.com/macros/s/AKfycbwlz_aIClqoIxIOrpdDwYtE4d4VBk48EHc7KGkZDuF9YI1f6Rk-MrVGFlSG0eoX_v6ofw/doFormSubmit?region=Division+1&team=Mumbai';
 
   fetch(url, {
       method: 'GET',
