@@ -93,6 +93,24 @@ select {
 
         document.getElementById('region').addEventListener('change', updateTeamDropdown);
 
+	document.getElementById('customForm').addEventListener('submit', function(event){
+
+		event.preventDefault();
+var formId = "1CARwSIqjQKzaYRl0d6LvdCcrUWPcO0srN4TAjK72Iso";
+  var form = FormApp.openById(formId);
+
+  var regionEntryId = "entry.303646027";
+  var teamEntryId = "entry.1633013212";
+
+  var itemRegion = form.getItemById(form.getItemIds()[0]).asListItem();
+  var itemTeam = form.getItemById(form.getItemIds()[1]).asListItem();
+
+  form.createResponse().withItemResponse(itemRegion.createResponse(region))
+                        .withItemResponse(itemTeam.createResponse(region))
+                        .submit();
+
+});
+
 	
     </script>
 </body>
