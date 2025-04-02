@@ -29,12 +29,11 @@
             .then(data => {
                 var teamOptions = [];
                 for (var i = 1; i < data.length; i++) {
-                    if (data[i][0] == document.getElementById('303646027').value) {
+                    if (data[i][0] == document.getElementById('region').value) {
                         teamOptions.push(data[i][1]);
-			window.alert(document.getElementById('303646027').value);
                     }
                 }
-                var teamDropdown = document.getElementById('1633013212');
+                var teamDropdown = document.getElementById('team');
                 teamDropdown.innerHTML = "";
                 for (var j = 0; j < teamOptions.length; j++) {
                     var option = document.createElement("option");
@@ -44,7 +43,7 @@
             });
         }
 
-        document.getElementById('303646027').addEventListener('change', updateTeamDropdown);
+        document.getElementById('region').addEventListener('change', updateTeamDropdown);
     </script>
 </body>
 </html>
