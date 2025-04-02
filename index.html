@@ -4,7 +4,7 @@
     <title>Cricket Form</title>
 </head>
 <body>
-    <form id="customForm" action="https://docs.google.com/forms/d/e/1FAIpQLScQLe5MZjSO48_B8I9yTB4FkkhhsJmL0Ai_9ytTgCXg4yfTJQ/viewform?usp=pp_url&entry.303646027=&entry.1633013212=" method="GET">
+    <form id="customForm">
 
 				  
         <label for="region">Division:</label>
@@ -28,7 +28,7 @@
 
     <script>
         function updateTeamDropdown() {
-            fetch('https://script.google.com/macros/s/AKfycbz9KomP3Oq_J7lHyJPATg3VBhx9u7NKxp0svLfyz-pNrFQnFHYsSGZqhMYpgxtZ7tns/exec')
+            fetch('https://script.google.com/macros/s/AKfycbyuqBJuU104P0giSJujzFmvQQ-OG4ahhgqMuvGCI27zD-08Rc68N5elAucHFONq5P0/exec')
             .then(response => response.json())
             .then(data => {
                 var teamOptions = [];
