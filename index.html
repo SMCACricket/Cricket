@@ -62,7 +62,11 @@
 		var team= encodeURIComponent(document.getElementById('team').value);
 
 		var googleFormURL = "https://docs.google.com/forms/d/e/1FAIpQLScQLe5MZjSO48_B8I9yTB4FkkhhsJmL0Ai_9ytTgCXg4yfTJQ/viewform?usp=pp_url&entry.303646027="+ region +"&entry.1633013212=" +team ;
-		window.location.href = googleFormURL;
+		
+		console.log(googleFormURL);
+		setTimeout(function(){
+			window.location.href = googleFormURL;}, 500);
+		
 
 		});
     </script>
