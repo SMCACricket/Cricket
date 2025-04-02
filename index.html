@@ -67,7 +67,7 @@ select {
 
     <script>
         function updateTeamDropdown() {
-            fetch('https://script.google.com/macros/s/AKfycbwEDk6-MoivlsJuX96HXU0yotnJ7-IS3E29EEq06WbvFctCQd06RdCWFnciD7Al0Lku4w/exec')
+            fetch('https://script.google.com/macros/s/AKfycbwVQmpZi9ZVS4fHJkkCZXqLR1i4DN69jr4_2_GHc6uD0D5tCUNJe6Cbiujz6b1jGUSPXg/exec')
             .then(response => response.json())
             .then(data => {
                 var teamOptions = [];
@@ -93,33 +93,7 @@ select {
 
         document.getElementById('region').addEventListener('change', updateTeamDropdown);
 
-	<!--document.getElementById('customForm').addEventListener('submit', function(event){
-
-		event.preventDefault();
-
-		var region = encodeURIComponent(document.getElementById('region').value);
-		var team= encodeURIComponent(document.getElementById('team').value);
-
-		var url = "https://script.google.com/macros/s/AKfycbwEDk6-MoivlsJuX96HXU0yotnJ7-IS3E29EEq06WbvFctCQd06RdCWFnciD7Al0Lku4w/exec/doFormSubmit?region="+region+"&team="+ team;
-
-		 fetch(url, {
-                method: 'GET', mode: 'cors'})
-               
-            .then(response => response.text())
-            .then(data => {
-                alert("Data saved successfully!");
-                document.getElementById('customForm').reset();
-            })
-            .catch(error => {
-                alert("Error saving data: " + error);
-            });
-        });
-
-        
-		
-
 	
-			updateTeamDropdown(); -->
     </script>
 </body>
 </html>
