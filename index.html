@@ -35,6 +35,11 @@
                 }
                 var teamDropdown = document.getElementById('team');
                 teamDropdown.innerHTML = "";
+		var placeholderOption = document.createElement("option");
+		placeholderOption.text = "Select a team";
+		teamDropdown.add(placeholderOption);
+		placeholderOption.value="";
+
                 for (var j = 0; j < teamOptions.length; j++) {
                     var option = document.createElement("option");
                     option.text = teamOptions[j];
