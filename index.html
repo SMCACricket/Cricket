@@ -67,7 +67,7 @@ select {
 
     <script>
         function updateTeamDropdown() {
-            fetch('https://script.google.com/macros/s/AKfycbyt4EytX_IHWutdMX8J871BhO0gEex-lDNjfXLBkNS50bdnc4-K_aOyHrdN2Fp3VBX_1Q/exec')
+            fetch('https://script.google.com/macros/s/AKfycbwEDk6-MoivlsJuX96HXU0yotnJ7-IS3E29EEq06WbvFctCQd06RdCWFnciD7Al0Lku4w/exec')
             .then(response => response.json())
             .then(data => {
                 var teamOptions = [];
@@ -100,7 +100,7 @@ select {
 		var region = encodeURIComponent(document.getElementById('region').value);
 		var team= encodeURIComponent(document.getElementById('team').value);
 
-		var url = "https://script.google.com/macros/s/AKfycbyt4EytX_IHWutdMX8J871BhO0gEex-lDNjfXLBkNS50bdnc4-K_aOyHrdN2Fp3VBX_1Q/exec/doFormSubmit?region="+region+"&team="+ team;
+		var url = "https://script.google.com/macros/s/AKfycbwEDk6-MoivlsJuX96HXU0yotnJ7-IS3E29EEq06WbvFctCQd06RdCWFnciD7Al0Lku4w/exec/doFormSubmit?region="+region+"&team="+ team;
 
 		 fetch(url, {
                 method: 'GET', mode: 'cors'})
