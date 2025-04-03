@@ -66,6 +66,30 @@ select {
     </form>
 
   <script>
+
+
+	function populateTeamDropdown(region) {
+    fetch('https://script.google.com/macros/s/AKfycbzVAM4J2caDVyix9MotXGUQvTgGDCh3moPcGQndyX08QtxmASDEf4rR-qsxvmTHyRNb/exec') // GET request
+      .then(response => response.json())
+      .then(data => {
+        var teamDropdown = document.getElementById('team');
+        teamDropdown.innerHTML = '<option value="">Select a team</option>'; // Clear previous options
+        data.forEach(team => {
+          var option = document.createElement('option');
+          option.value = team;
+          option.textContent = team;
+          teamDropdown.appendChild(option);
+        });
+      });
+  }
+
+  // Populate the team dropdown on page load
+  populateTeamDropdown();
+
+
+
+
+
     document.getElementById('customForm').addEventListener('submit', function() {
 	event.preventDefault();
 
@@ -73,7 +97,7 @@ select {
      	 var team = document.getElementById('team').value;
 
 
-      fetch('https://script.google.com/macros/s/AKfycbwZWukqzv-6fl6LeLzj1GSQx746OkxbrQxCPltjFwN_WcaCqTTz-ub0kFNQtKi5OcE3/exec', { // Replace with your script URL
+      fetch('https://script.google.com/macros/s/AKfycbzVAM4J2caDVyix9MotXGUQvTgGDCh3moPcGQndyX08QtxmASDEf4rR-qsxvmTHyRNb/exec', { // Replace with your script URL
         method: 'POST',
         mode: 'cors',
         headers: {
