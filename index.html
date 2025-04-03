@@ -68,23 +68,7 @@ select {
   <script>
 
 
-	function populateTeamDropdown(region) {
-    fetch('https://script.google.com/macros/s/AKfycbzVAM4J2caDVyix9MotXGUQvTgGDCh3moPcGQndyX08QtxmASDEf4rR-qsxvmTHyRNb/exec') // GET request
-      .then(response => response.json())
-      .then(data => {
-        var teamDropdown = document.getElementById('team');
-        teamDropdown.innerHTML = '<option value="">Select a team</option>'; // Clear previous options
-        data.forEach(team => {
-          var option = document.createElement('option');
-          option.value = team;
-          option.textContent = team;
-          teamDropdown.appendChild(option);
-        });
-      });
-  }
-
-  // Populate the team dropdown on page load
-  populateTeamDropdown();
+	
 
 
 
