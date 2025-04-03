@@ -67,13 +67,19 @@ select {
 
   <script>
     document.getElementById('customForm').addEventListener('submit', function() {
+	event.preventDefault();
+
+	 var region = document.getElementById('region').value;
+     	 var team = document.getElementById('team').value;
+
+
       fetch('https://script.google.com/macros/s/AKfycbwZWukqzv-6fl6LeLzj1GSQx746OkxbrQxCPltjFwN_WcaCqTTz-ub0kFNQtKi5OcE3/exec', { // Replace with your script URL
         method: 'POST',
         mode: 'cors',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: 'region=Division%201&team=Bangalore' // URL-encoded parameters
+        body: 'region=' + encodeURIComponent(region) + '&team=' + encodeURIComponent(team) // URL-encoded parameters
       })
       .then(response => response.text())
       .then(data => {
