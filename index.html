@@ -43,20 +43,18 @@ select {
 </style>
 </head>
 <body>
-    <form id="customForm" action="https://docs.google.com/forms/d/e/1FAIpQLScQLe5MZjSO48_B8I9yTB4FkkhhsJmL0Ai_9ytTgCXg4yfTJQ/viewform?usp=pp_url&entry.303646027=&entry.1633013212=" method="GET">
+    <form id="customForm">
 
 				  
         <label for="region">Division:</label>
-        <select id="region" name="entry.303646027">
+        <select id="region" name="entry.710054407">
             <option value="Division 1">Division 1</option>
             <option value="Division 2">Division 2</option>
-            <option value="Division 3">Division 3</option>
- 	    <option value="Division 4">Division 4</option>
         </select>
         <br><br>
 
         <label for="team">Team:</label>
-        <select id="team" name="entry.1633013212">
+        <select id="team" name="entry.524307792">
             <option value="">Select a team</option>
         </select>
 	<br><br>
@@ -66,52 +64,26 @@ select {
     </form>
 
     <script>
-        function updateTeamDropdown() {
-            fetch('https://script.google.com/macros/s/AKfycby2Xb715qrRtj-Q_K73gZGV6Deqc79aB5tfVhIuVttge_4ppObWL1QrK2W-JwPdnEN1Ug/exec')
-            .then(response => response.json())
-            .then(data => {
-                var teamOptions = [];
-                for (var i = 1; i < data.length; i++) {
-                    if (data[i][0] == document.getElementById('region').value) {
-                        teamOptions.push(data[i][1]);
-                    }
-                }
-                var teamDropdown = document.getElementById('team');
-                teamDropdown.innerHTML = "";
-		var placeholderOption = document.createElement("option");
-		placeholderOption.text = "Select a team";
-		teamDropdown.add(placeholderOption);
-		placeholderOption.value="";
+        
+		document.getElementById('customForm').addEventListener('submit', function(event) {
+  		event.preventDefault();
 
-                for (var j = 0; j < teamOptions.length; j++) {
-                    var option = document.createElement("option");
-                    option.text = teamOptions[j];
-                    teamDropdown.add(option);
-                }
-            });
-        }
+  		var region = document.getElementById('region').value;
+  		var team = document.getElementById('team').value;
 
-        document.getElementById('region').addEventListener('change', updateTeamDropdown);
+  		var url = "https://script.google.com/macros/s/AKfycbwZWukqzv-6fl6LeLzj1GSQx746OkxbrQxCPltjFwN_WcaCqTTz-ub0kFNQtKi5OcE3/doFill?region="+region+"&team="+team;
 
-	document.getElementById('customForm').addEventListener('submit', function(event) {
-  event.preventDefault();
-
-  var region = document.getElementById('region').value;
-  var team = document.getElementById('team').value;
-
-  var url = "https://script.google.com/macros/s/AKfycby2Xb715qrRtj-Q_K73gZGV6Deqc79aB5tfVhIuVttge_4ppObWL1QrK2W-JwPdnEN1Ug/doFormSubmit?region="+region+"&team="+team;
-
-  fetch(url, {
-      method: 'GET'
-    })
-    .then((response) => response.text())
-    .then((data) => {
-      alert(data);
-    })
-    .catch((error) => {
-      alert('Error: ' + error);
-    });
-});
+  		fetch(url, {
+     		method: 'GET'
+    				})
+    				.then((response) => response.text())
+    				.then((data) => {
+     				 alert(data);
+    					})
+    					.catch((error) => {
+      					alert('Error: ' + error);
+    					});
+			});
 
 	
     </script>
