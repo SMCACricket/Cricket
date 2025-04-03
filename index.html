@@ -67,7 +67,7 @@ select {
 
     <script>
         function updateTeamDropdown() {
-            fetch('https://script.google.com/macros/s/AKfycbwp3Oh2yHeHVKgU57oFirV2QvZEfW3ZZzTRh6eJqxJHxRavArbMsppII3t-tQmKG83yaw/exec')
+            fetch('https://script.google.com/macros/s/AKfycby2Xb715qrRtj-Q_K73gZGV6Deqc79aB5tfVhIuVttge_4ppObWL1QrK2W-JwPdnEN1Ug/exec')
             .then(response => response.json())
             .then(data => {
                 var teamOptions = [];
@@ -99,7 +99,7 @@ select {
   var region = document.getElementById('region').value;
   var team = document.getElementById('team').value;
 
-  var url = "https://script.google.com/macros/s/AKfycbwp3Oh2yHeHVKgU57oFirV2QvZEfW3ZZzTRh6eJqxJHxRavArbMsppII3t-tQmKG83yaw/exec/doFormSubmit?region="+region+"&team="+team;
+  var url = "https://script.google.com/macros/s/AKfycby2Xb715qrRtj-Q_K73gZGV6Deqc79aB5tfVhIuVttge_4ppObWL1QrK2W-JwPdnEN1Ug/doFormSubmit?region="+region+"&team="+team;
 
   fetch(url, {
       method: 'GET'
