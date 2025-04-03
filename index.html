@@ -2,19 +2,78 @@
 <html>
 <head>
   <title>Google Apps Script Test</title>
+<style>
+
+select {
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            width: 250px; /* Adjust width as needed */
+            box-sizing: border-box; /* Include padding and border in width */
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #007bff; /* Highlight on focus */
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add a subtle shadow */
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+</style>
 </head>
 <body>
-  <button id="submitButton">Submit Form</button>
+  
+
+	<form id="customForm">
+
+				  
+        <label for="region">Division:</label>
+        <select id="region" name="entry.710054407">
+            <option value="Division 1">Division 1</option>
+            <option value="Division 2">Division 2</option>
+        </select>
+        <br><br>
+
+        <label for="team">Team:</label>
+        <select id="team" name="entry.524307792">
+            <option value="">Select a team</option>
+        </select>
+	<br><br>
+	
+
+        <input type="submit" value="Submit">
+    </form>
 
   <script>
-    document.getElementById('submitButton').addEventListener('click', function() {
+    document.getElementById('customForm').addEventListener('submit', function() {
       fetch('https://script.google.com/macros/s/AKfycbwZWukqzv-6fl6LeLzj1GSQx746OkxbrQxCPltjFwN_WcaCqTTz-ub0kFNQtKi5OcE3/exec', { // Replace with your script URL
         method: 'POST',
         mode: 'cors',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: 'region=Division%201&team=Vizag' // URL-encoded parameters
+        body: 'region=Division%201&team=Bangalore' // URL-encoded parameters
       })
       .then(response => response.text())
       .then(data => {
