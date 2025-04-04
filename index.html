@@ -75,6 +75,31 @@ select {
 
   <script>
 
+	function updateTeamDropdown() {
+            // Your code to fetch team options from Google Apps Script
+            // and populate the team dropdown.
+            fetch('https://script.google.com/macros/s/AKfycbylXfvM3NFwn_RxzFAjYd8efTZD-WJySE0NT6zXAlyLfbQj5vFcEcpSxOP1e8KXxVP0/exec')
+                .then(response => response.json())
+                .then(data => {
+                    var teamOptions = [];
+                    for (var i = 1; i < data.length; i++) {
+                        if (data[i][0] == document.getElementById('region').value) {
+                            teamOptions.push(data[i][1]);
+                        }
+                    }
+                    var teamDropdown = document.getElementById('team');
+                    teamDropdown.innerHTML = "";
+                    for (var j = 0; j < teamOptions.length; j++) {
+                        var option = document.createElement("option");
+                        option.text = teamOptions[j];
+                        option.value = teamOptions[j];
+                        teamDropdown.add(option);
+                    }
+                });
+        }
+
+        document.getElementById('region').addEventListener('change', updateTeamDropdown);
+
 
 
     document.getElementById('customForm').addEventListener('submit', function() {
