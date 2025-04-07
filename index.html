@@ -91,7 +91,7 @@ input[type="radio"] {
 	<br><br>
 
       <label for="round">Round:</label>
-        <select id="round" name="round.1">
+        <select id="round" name="round">
             <option value="Round 1">Round 1</option>
             <option value="Round 2">Round 2</option>
 	    <option value="Round 3">Round 3</option>
@@ -103,7 +103,7 @@ input[type="radio"] {
         <br><br>
 
        <label for="match">Match:</label>
-        <select id="match" name="Match.1">
+        <select id="match" name="match">
             <option value="">Select a Match</option>
         </select>
 	<br><br>
@@ -194,7 +194,7 @@ input[type="radio"] {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: 'region=' + encodeURIComponent(region) + '&team=' + encodeURIComponent(team)+ '&roundNo=' + encodeURIComponent(roundNo) + '&match=' + encodeURIComponent(teamVs) + '&threepointsplayer=' +  encodeURIComponent(threepointsplayer) + '&twopointssplayer=' +  encodeURIComponent(twopointsplayer) + '&onepointplayer=' +  encodeURIComponent(onepointplayer)// URL-encoded parameters
+        body: 'region=' + encodeURIComponent(region) + '&team=' + encodeURIComponent(team)+ '&roundNo=' + encodeURIComponent(roundNo) + '&match=' + encodeURIComponent(teamVs) + '&threepointsplayer=' +  encodeURIComponent(threepointsplayer) + '&twopointsplayer=' +  encodeURIComponent(twopointsplayer) + '&onepointplayer=' +  encodeURIComponent(onepointplayer)// URL-encoded parameters
       })
       .then(response => response.text())
       .then(data => {
