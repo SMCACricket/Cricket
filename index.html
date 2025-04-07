@@ -181,6 +181,11 @@ input[type="radio"] {
 
 	 var region = document.getElementById('region').value;
      	 var team = document.getElementById('team').value;
+	 var roundNo = document.getElementById('round').value;
+         var teamVs = document.getElementById('match').value;
+         var threepointsplayer = document.getElementById('player1Name').value;
+         var twopointsplayer = document.getElementById('player2Name').value;
+         var onepointplayer = document.getElementById('player3Name').value;
 
 
       fetch('https://script.google.com/macros/s/AKfycbzs6V5lVM8eVgkWLSPqTe2Ve5cutK6Q_EIpKrVNbc5Oz7tDf8cYaQHgrAQZbkBMIW-U/exec', { // Replace with your script URL
@@ -189,7 +194,7 @@ input[type="radio"] {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: 'region=' + encodeURIComponent(region) + '&team=' + encodeURIComponent(team) // URL-encoded parameters
+        body: 'region=' + encodeURIComponent(region) + '&team=' + encodeURIComponent(team)+ '&roundNo=' + encodeURIComponent(roundNo) + '&match=' + encodeURIComponent(teamVs) + '&threepointsplayer=' +  encodeURIComponent(threepointsplayer) + '&twopointssplayer=' +  encodeURIComponent(twopointsplayer) + '&onepointplayer=' +  encodeURIComponent(onepointplayer)// URL-encoded parameters
       })
       .then(response => response.text())
       .then(data => {
