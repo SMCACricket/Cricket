@@ -71,9 +71,10 @@ input[type="radio"] {
 				  
         <label for="region">Division:</label>
         <select id="region" name="entry.710054407">
+			<option value="">Select your team Division</option>
             <option value="Division 1">Division 1</option>
             <option value="Division 2">Division 2</option>
-	    <option value="Division 3">Division 3</option>
+	        <option value="Division 3">Division 3</option>
             <option value="Division 4">Division 4</option>
             <option value="Division 5">Division 5</option>
             <option value="Division 6">Division 6</option>
@@ -92,9 +93,10 @@ input[type="radio"] {
 
       <label for="round">Round:</label>
         <select id="round" name="round">
+			<option value="">Select Round</option>
             <option value="Round 1">Round 1</option>
             <option value="Round 2">Round 2</option>
-	    <option value="Round 3">Round 3</option>
+			<option value="Round 3">Round 3</option>
             <option value="Round 4">Round 4</option>
             <option value="Round 5">Round 5</option>
             <option value="Round 6">Round 6</option>
@@ -153,46 +155,91 @@ input[type="radio"] {
 		let divisionTeamsDataCache = [];
 
 //listofmatchesbasedonround
+function populateTeamDropdown(teamsDataCache) {
+  const teamDropdownElement = document.getElementById('team');
+  teamDropdownElement.innerHTML = '<option value="">Loading teams...</option>';
+  teamDropdownElement.disabled = true;
 
-	function populateTeamDropdown(teamsDataCache) {
-            // Your code to fetch team options from Google Apps Script
-            // and populate the team dropdown.
-		
-                    var teamOptions = [];
-                    for (var i = 1; i < teamsDataCache.length; i++) {
-                        if (teamsDataCache[i][0] == document.getElementById('region').value) {
-                            teamOptions.push(teamsDataCache[i][1]);
-                        }
-                    }
-                    var teamDropdown = document.getElementById('team');
-                    teamDropdown.innerHTML = "";
-                    for (var j = 0; j < teamOptions.length; j++) {
-                        var option = document.createElement("option");
-                        option.text = teamOptions[j];
-                        option.value = teamOptions[j];
-                        teamDropdown.add(option);
-                    }
-                };
+  // Clear existing options
+  teamDropdownElement.innerHTML = '';
+
+  // Add the default "Select a team" option
+  const defaultOption = document.createElement("option");
+  defaultOption.value = "";
+  defaultOption.text = "Select a team";
+  teamDropdownElement.add(defaultOption);
+
+  if (teamsDataCache && teamsDataCache.length > 0) {
+    teamDropdownElement.disabled = false; // Re-enable after adding the default
+
+    for (let i = 1; i < teamsDataCache.length; i++) {
+      if (teamsDataCache[i][0] == document.getElementById('region').value) {
+        const option = document.createElement("option");
+        option.text = teamsDataCache[i][1];
+        option.value = teamsDataCache[i][1];
+        teamDropdownElement.add(option);
+      }
+    }
+    if (teamDropdownElement.options.length <= 1) {
+      const noTeamsOption = document.createElement("option");
+      noTeamsOption.value = "";
+      noTeamsOption.text = "No teams in this division";
+      teamDropdownElement.add(noTeamsOption);
+      teamDropdownElement.disabled = true;
+    }
+  } else {
+    const noTeamsOption = document.createElement("option");
+    noTeamsOption.value = "";
+    noTeamsOption.text = "No team data available";
+    teamDropdownElement.add(noTeamsOption);
+    teamDropdownElement.disabled = true;
+  }
+};
         
 	
-	
-	function updateRounds(MatchesBasedOnRoundsDataCache){
+function updateRounds(MatchesBasedOnRoundsDataCache) {
+  const matchDropdownElement = document.getElementById('match');
+  matchDropdownElement.innerHTML = '<option value="">Loading matches...</option>';
+  matchDropdownElement.disabled = true;
 
-  var matchOptionsArray = []; // Use a different name for the array
-	console.log('Selected Round:', document.getElementById('round').value);
-  for (var i = 1; i < MatchesBasedOnRoundsDataCache.length; i++) {
-    if (MatchesBasedOnRoundsDataCache[i][0] == document.getElementById('round').value) {
-      matchOptionsArray.push(MatchesBasedOnRoundsDataCache[i][1]);
+  const selectedRound = document.getElementById('round').value;
+
+  if (MatchesBasedOnRoundsDataCache) {
+    // Clear existing options (including the loading message)
+    matchDropdownElement.innerHTML = '';
+
+    // Add the default "Select a Match" option
+    const defaultOption = document.createElement("option");
+    defaultOption.value = "";
+    defaultOption.text = "Select a Match";
+    matchDropdownElement.add(defaultOption);
+
+    let hasMatches = false;
+    matchDropdownElement.disabled = false; // Re-enable now that the default is added
+
+    for (const key in MatchesBasedOnRoundsDataCache) {
+      if (MatchesBasedOnRoundsDataCache.hasOwnProperty(key)) {
+        const matchInfo = MatchesBasedOnRoundsDataCache[key];
+        if (matchInfo && matchInfo[0] === selectedRound) {
+          const option = document.createElement("option");
+          option.text = matchInfo[1];
+          option.value = matchInfo[1];
+          matchDropdownElement.add(option);
+          hasMatches = true;
+        }
+      }
     }
-  }
-  var matchDropdownElement = document.getElementById('match');
-  matchDropdownElement.innerHTML = '<option value="">Select a Match</option>'; // Clear existing options
-  for (var j = 0; j < matchOptionsArray.length; j++) {
-    var option = document.createElement("option");
-    option.text = matchOptionsArray[j];
-    option.value = matchOptionsArray[j];
-    matchDropdownElement.add(option);
-	
+
+    if (!hasMatches) {
+      const noMatchesOption = document.createElement("option");
+      noMatchesOption.value = "";
+      noMatchesOption.text = "No matches for this round";
+      matchDropdownElement.add(noMatchesOption);
+      matchDropdownElement.disabled = true;
+    }
+  } else {
+    matchDropdownElement.innerHTML = '<option value="">No match data available</option>';
+    matchDropdownElement.disabled = true;
   }
 }
 
@@ -200,6 +247,12 @@ input[type="radio"] {
 		
 		const selectedRegion = event.target.value;
 		var sheetname = document.getElementById('region').value;
+		
+			// --- Loading for Team Dropdown ---
+			const teamDropdown = document.getElementById('team');
+			teamDropdown.innerHTML = '<option value="">Loading teams...</option>';
+			teamDropdown.disabled = true; // Optionally disable the dropdown
+  
 		if (selectedRegion) {
 			fetch('https://script.google.com/macros/s/AKfycby6Qr0P_w2xZ4dkvXRstQd2EqZZuF9YgtLcj2ufhMkVnRBDDM4FQ0Ktk0tle45_HEAq/exec' + '?sheetname=' + encodeURIComponent(sheetname))
 			.then(response => response.json())
@@ -207,6 +260,7 @@ input[type="radio"] {
 			// Store team data (assuming your doGet returns teams filtered by division)
 			teamsDataCache = data.teams || [];
 			populateTeamDropdown(teamsDataCache);
+			teamDropdown.disabled = false; 
 	
 
         // Store division match data
@@ -227,9 +281,13 @@ input[type="radio"] {
 
 
 
-//-----------------------------------------------------------------------------------------------------
-
-	document.getElementById('round').addEventListener('change', updateRounds);
+	document.getElementById('round').addEventListener('change', function() {
+	 const matchDropdownElement1 = document.getElementById('match');
+  matchDropdownElement1.innerHTML = '<option value="">Loading teams....</option>'; // Initial state
+  matchDropdownElement1.disabled = true; // Optionally disable
+  updateRounds(MatchesBasedOnRoundsDataCache);
+  matchDropdownElement1.disabled = false;
+});
 
 
 
