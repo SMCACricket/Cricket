@@ -149,15 +149,18 @@ input[type="radio"] {
 
   <script>
 
-	function updateTeamDropdown() {
+		let MatchesBasedOnRoundsDataCache = []; 
+		let divisionTeamsDataCache = [];
+
+//listofmatchesbasedonround
+
+	function populateTeamDropdown(teamsDataCache) {
             // Your code to fetch team options from Google Apps Script
             // and populate the team dropdown.
-            fetch('https://script.google.com/macros/s/AKfycbylXfvM3NFwn_RxzFAjYd8efTZD-WJySE0NT6zXAlyLfbQj5vFcEcpSxOP1e8KXxVP0/exec')
-                .then(response => response.json())
-                .then(data => {
+		
                     var teamOptions = [];
-                    for (var i = 1; i < data.length; i++) {
-                        if (data[i][0] == document.getElementById('region').value) {
+                    for (var i = 1; i < teamsDataCache.length; i++) {
+                        if (teamsDataCache[i][0] == document.getElementById('region').value) {
                             teamOptions.push(data[i][1]);
                         }
                     }
@@ -170,18 +173,73 @@ input[type="radio"] {
                         teamDropdown.add(option);
                     }
                 });
-        }
+        
 
-        document.getElementById('region').addEventListener('change', updateTeamDropdown);
+	function updateRounds(MatchesBasedOnRoundsDataCache){
+	
+	var matchOptions = [];
+	
+	for (var i = 1; i < teamsDataCache.length; i++) {
+                        if (teamsDataCache[i][0] == document.getElementById('round').value) {
+                            teamOptions.push(data[i][1]);
+                        }
+                    }
+					var matchOptions = document.getElementById('match');
+                    matchOptions.innerHTML = "";
+                    for (var j = 0; j < teamOptions.length; j++) {
+                        var option = document.createElement("option");
+                        option.text = teamOptions[j];
+                        option.value = teamOptions[j];
+                        matchOptions.add(option);
+                    }
+
+	
+
+
+
+
+	}
+
+        document.getElementById('region').addEventListener('change', (event) => {
+  const selectedRegion = event.target.value;
+  if (selectedRegion) {
+    fetch('https://script.google.com/macros/s/AKfycby6Qr0P_w2xZ4dkvXRstQd2EqZZuF9YgtLcj2ufhMkVnRBDDM4FQ0Ktk0tle45_HEAq/exec' + '?sheetname=' + encodeURIComponent(sheetname)')
+      .then(response => response.json())
+      .then(data => {
+        // Store team data (assuming your doGet returns teams filtered by division)
+        teamsDataCache = data.teams || [];
+        populateTeamDropdown(teamsDataCache);
+	
+
+        // Store division match data
+        MatchesBasedOnRoundsDataCache = data.listofmatchesbasedonround || [];
+        
+      })
+      .catch(error => console.error('Error fetching data:', error));
+  } else {
+    teamDropdown.innerHTML = '<option value="">Select a team</option>';
+    roundDropdown.innerHTML = '<option value="">Select a round</option>';
+    matchDropdown.innerHTML = '<option value="">Select a match</option>';
+    teamsDataCache = [];
+    divisionMatchDataCache = [];
+  }
+});
+
+
+
+
+//-----------------------------------------------------------------------------------------------------
+
+	document.getElementById('round').addEventListener('change', updateRounds);
 
 
 
     document.getElementById('customForm').addEventListener('submit', function() {
 	event.preventDefault();
 
-	 var region = document.getElementById('region').value;
+	     var region = document.getElementById('region').value;
      	 var team = document.getElementById('team').value;
-	 var roundNo = document.getElementById('round').value;
+	     var roundNo = document.getElementById('round').value;
          var teamVs = document.getElementById('match').value;
          var threepointsplayer = document.getElementById('player1Name').value;
          var twopointsplayer = document.getElementById('player2Name').value;
