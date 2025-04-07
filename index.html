@@ -40,6 +40,27 @@ select {
         input[type="submit"]:hover {
             background-color: #0056b3;
         }
+
+	input[type="text"] {
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            width: 250px; /* Adjust width as needed */
+            box-sizing: border-box; /* Include padding and border in width */
+        }
+
+label {
+  font-size: 22px; /* Match the font size of the text box */
+  margin-right: 5px; /* Add some spacing to the right of the label */
+}
+
+
+input[type="radio"] {
+  margin: 5px; /* Add some margin around the radio button */
+  /* You might want to adjust width and height for better visual consistency, but it can be tricky with default radio buttons */
+}
 </style>
 </head>
 <body>
@@ -68,6 +89,59 @@ select {
             <option value="">Select a team</option>
         </select>
 	<br><br>
+
+      <label for="round">Round:</label>
+        <select id="round" name="round.1">
+            <option value="Round 1">Round 1</option>
+            <option value="Round 2">Round 2</option>
+	    <option value="Round 3">Round 3</option>
+            <option value="Round 4">Round 4</option>
+            <option value="Round 5">Round 5</option>
+            <option value="Round 6">Round 6</option>
+            <option value="Round 7">Round 7</option>
+        </select>
+        <br><br>
+
+       <label for="match">Match:</label>
+        <select id="match" name="Match.1">
+            <option value="">Select a Match</option>
+        </select>
+	<br><br>
+
+	
+  <hr>
+<div>
+  <h3>Player awarded with 3 points</h3>
+  <div style="display: flex; align-items: center;">
+    <label for="player1Name" style="margin-right: 10px;">Name:</label>
+    <input type="text" id="player1Name" name="player1Name">
+    <label style="margin-left: 20px; margin-right: 5px;">  3 Points</label>
+   
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <h3>Player awarded with 2 points</h3>
+  <div style="display: flex; align-items: center;">
+    <label for="player2Name" style="margin-right: 10px;">Name:</label>
+    <input type="text" id="player2Name" name="player2Name">
+    <label style="margin-left: 20px; margin-right: 5px;">  2 Points</label>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <h3>Player awarded with 1 point</h3>
+  <div style="display: flex; align-items: center;">
+    <label for="player3Name" style="margin-right: 10px;">Name:</label>
+    <input type="text" id="player3Name" name="player3Name">
+    <label style="margin-left: 20px; margin-right: 5px;"> 1 Point</label>
+  </div>
+</div>
+<hr>
 	
 
         <input type="submit" value="Submit">
@@ -109,7 +183,7 @@ select {
      	 var team = document.getElementById('team').value;
 
 
-      fetch('https://script.google.com/macros/s/AKfycbwVUEy3zCBwXA27W62_oGuPKAfgKB2vgKErxcxuOD2L2TMyPNjdimmMFAVL-1AoS5ST/exec', { // Replace with your script URL
+      fetch('https://script.google.com/macros/s/AKfycbzs6V5lVM8eVgkWLSPqTe2Ve5cutK6Q_EIpKrVNbc5Oz7tDf8cYaQHgrAQZbkBMIW-U/exec', { // Replace with your script URL
         method: 'POST',
         mode: 'cors',
         headers: {
