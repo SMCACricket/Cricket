@@ -197,6 +197,7 @@ input[type="radio"] {
 
         document.getElementById('region').addEventListener('change', (event) => {
   const selectedRegion = event.target.value;
+  var sheetname = document.getElementById('region').value;
   if (selectedRegion) {
     fetch('https://script.google.com/macros/s/AKfycby6Qr0P_w2xZ4dkvXRstQd2EqZZuF9YgtLcj2ufhMkVnRBDDM4FQ0Ktk0tle45_HEAq/exec' + '?sheetname=' + encodeURIComponent(sheetname))
       .then(response => response.json())
