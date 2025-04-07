@@ -315,6 +315,13 @@ function updateRounds(MatchesBasedOnRoundsDataCache) {
       .then(data => {
         console.log(data); // Log the response
         alert(data); // Alert the response
+		 document.getElementById('round').selectedIndex = 0; 
+		 document.getElementById('region').selectedIndex = 0;
+		 document.getElementById('player1Name').value = '';
+		 document.getElementById('player2Name').value = '';
+		 document.getElementById('player3Name').value = '';
+		 document.getElementById('team').selectedIndex = 0;
+		 document.getElementById('match').selectedIndex = 0;
       })
       .catch(error => {
         console.error('Error:', error);
