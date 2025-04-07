@@ -179,7 +179,7 @@ input[type="radio"] {
 	function updateRounds(MatchesBasedOnRoundsDataCache){
 
   var matchOptionsArray = []; // Use a different name for the array
-
+	console.log('Selected Round:', document.getElementById('round').value);
   for (var i = 1; i < MatchesBasedOnRoundsDataCache.length; i++) {
     if (MatchesBasedOnRoundsDataCache[i][0] == document.getElementById('round').value) {
       matchOptionsArray.push(MatchesBasedOnRoundsDataCache[i][1]);
@@ -192,23 +192,26 @@ input[type="radio"] {
     option.text = matchOptionsArray[j];
     option.value = matchOptionsArray[j];
     matchDropdownElement.add(option);
+	
   }
 }
 
         document.getElementById('region').addEventListener('change', (event) => {
-  const selectedRegion = event.target.value;
-  var sheetname = document.getElementById('region').value;
-  if (selectedRegion) {
-    fetch('https://script.google.com/macros/s/AKfycby6Qr0P_w2xZ4dkvXRstQd2EqZZuF9YgtLcj2ufhMkVnRBDDM4FQ0Ktk0tle45_HEAq/exec' + '?sheetname=' + encodeURIComponent(sheetname))
-      .then(response => response.json())
-      .then(data => {
-        // Store team data (assuming your doGet returns teams filtered by division)
-        teamsDataCache = data.teams || [];
-        populateTeamDropdown(teamsDataCache);
+		
+		const selectedRegion = event.target.value;
+		var sheetname = document.getElementById('region').value;
+		if (selectedRegion) {
+			fetch('https://script.google.com/macros/s/AKfycby6Qr0P_w2xZ4dkvXRstQd2EqZZuF9YgtLcj2ufhMkVnRBDDM4FQ0Ktk0tle45_HEAq/exec' + '?sheetname=' + encodeURIComponent(sheetname))
+			.then(response => response.json())
+			.then(data => {
+			// Store team data (assuming your doGet returns teams filtered by division)
+			teamsDataCache = data.teams || [];
+			populateTeamDropdown(teamsDataCache);
 	
 
         // Store division match data
         MatchesBasedOnRoundsDataCache = data.listofmatchesbasedonround || [];
+		console.log('MatchesBasedOnRoundsDataCache:', MatchesBasedOnRoundsDataCache);
         
       })
       .catch(error => console.error('Error fetching data:', error));
