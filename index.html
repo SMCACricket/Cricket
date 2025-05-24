@@ -260,6 +260,9 @@ function updateRounds(MatchesBasedOnRoundsDataCache) {
 }
 
         document.getElementById('region').addEventListener('change', (event) => {
+
+		roundDropdown.innerHTML = '<option value="">Select a round</option>';
+    		matchDropdown.innerHTML = '<option value="">Select a match</option>';
 		
 		const selectedRegion = event.target.value;
 		var sheetname = document.getElementById('region').value;
