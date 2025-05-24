@@ -1,98 +1,189 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Google Apps Script Test</title>
+  <title>SMCA Player of the Season Points</title>
 <style>
-	body {
-    position: relative;
-}
-body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('SMCA_logo.jpg');
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: 50%; /* Adjust as needed */
-    opacity: 0.1; /* Adjust opacity */
-    z-index: -1; /* Ensures it stays behind content */
-    pointer-events: none; /* Allows clicks/interactions with content on top */
-}
+    /* Global Styles and Reset */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern, clean font */
+        margin: 0;
+        padding: 20px; /* Add some padding around the content */
+        background-color: #f4f7f6; /* Light background for a clean feel */
+        color: #333; /* Default text color */
+        line-height: 1.6; /* Better readability */
+        position: relative; /* Needed for pseudo-element watermark */
+        min-height: 100vh; /* Ensure body takes full viewport height */
+        display: flex;
+        flex-direction: column; /* Stack content vertically */
+        align-items: center; /* Center content horizontally */
+    }
 
-select {
+    /* Watermark for Logo */
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('SMCA_logo.jpg'); /* Ensure this path is correct */
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: 40%; /* Slightly smaller, adjust as needed */
+        opacity: 0.20; /* Slightly more subtle, adjust as needed */
+        z-index: -1;
+        pointer-events: none;
+    }
+
+    /* Main Heading */
+    h1 {
+        text-align: center;
+        color: #2c3e50; /* A darker, professional blue-gray */
+        font-size: 2.8em; /* Prominent size */
+        margin-top: 30px;
+        margin-bottom: 40px;
+        letter-spacing: 1px; /* A little breathing room for letters */
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+    }
+
+    /* Form Container Styling */
+    #customForm {
+        background-color: rgba(255, 255, 255, 0.45);
+        padding: 40px;
+        border-radius: 10px; /* Softer rounded corners */
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* More pronounced, soft shadow */
+        width: 100%;
+        max-width: 600px; /* Limit form width for better readability on large screens */
+        box-sizing: border-box;
+        margin-bottom: 40px; /* Space below the form */
+    }
+
+    /* Labels */
+    label {
+        display: block; /* Ensures label is on its own line */
+        margin-top: 15px; /* More space above labels */
+        margin-bottom: 8px; /* Space between label and input */
+        font-weight: bold;
+        font-size: 1.1em; /* Slightly larger labels */
+        color: #555; /* Softer label color */
+    }
+
+    /* Select and Text Inputs */
+    select,
+    input[type="text"] {
+        width: calc(100% - 22px); /* Full width minus padding and border */
+        padding: 12px; /* More padding inside inputs */
+        margin: 5px 0; /* Consistent margin */
+        border: 1px solid #dcdcdc; /* Lighter, subtle border */
+        border-radius: 6px; /* Slightly more rounded */
+        font-size: 1em; /* Consistent font size */
+        box-sizing: border-box;
+        transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transitions */
+    }
+
+    select:focus,
+    input[type="text"]:focus {
+        outline: none;
+        border-color: #007bff; /* Primary brand color for focus */
+        box-shadow: 0 0 8px rgba(0, 123, 255, 0.3); /* Softer, wider shadow on focus */
+    }
+
+    /* Submit Button */
+    input[type="submit"] {
+        padding: 12px 25px; /* More padding */
+        background-color: #007bff; /* Primary brand color */
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 1.1em; /* Slightly larger text */
+        cursor: pointer;
+        margin-top: 30px; /* More space above button */
+        width: auto; /* Allow button to size to content */
+        display: block; /* Make it a block element */
+        margin-left: auto; /* Center button */
+        margin-right: auto; /* Center button */
+        transition: background-color 0.3s ease; /* Smooth hover effect */
+    }
+
+    input[type="submit"]:hover {
+        background-color: #0056b3; /* Darker shade on hover */
+        transform: translateY(-2px); /* Slight lift on hover */
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* Add shadow on hover */
+    }
+
+    /* Horizontal Rules (Dividers) */
+    hr {
+        border: none;
+        border-top: 1px solid #eee; /* Lighter, more subtle line */
+        margin: 30px 0; /* More vertical space */
+    }
+
+    /* Player Award Sections */
+    div h3 {
+        color: #4a4a4a; /* Slightly darker than body text */
+        font-size: 1.3em;
+        margin-bottom: 15px; /* Space below heading */
+    }
+
+    div > div { /* For the flex containers around player name/points */
+        display: flex;
+        align-items: center;
+        gap: 15px; /* Space between input and points label */
+        flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    }
+
+    /* Specific Player Name Labels */
+    div > div label {
+        margin-top: 0; /* Remove top margin for labels in flex */
+        margin-bottom: 0; /* Remove bottom margin for labels in flex */
+        font-weight: normal; /* Make these labels less bold */
+        font-size: 1em; /* Adjust font size */
+    }
+
+    /* Player Points Label */
+    div > div label[style*="margin-left"] { /* Targeting the points label specifically */
+        font-weight: bold;
+        color: #007bff; /* Highlight points with the brand color */
+        font-size: 1.1em;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        body {
             padding: 10px;
-            margin: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
-            width: 250px; /* Adjust width as needed */
-            box-sizing: border-box; /* Include padding and border in width */
         }
-
-        select:focus {
-            outline: none;
-            border-color: #007bff; /* Highlight on focus */
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add a subtle shadow */
+        h1 {
+            font-size: 2em;
+            margin-bottom: 30px;
         }
-
-        label {
-            display: block;
-            margin-top: 10px;
-            font-weight: bold;
+        #customForm {
+            padding: 20px;
         }
-
-        input[type="submit"] {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-            margin-top: 15px;
+        select,
+        input[type="text"] {
+            width: 100%; /* Take full width on smaller screens */
         }
-
-        input[type="submit"]:hover {
-            background-color: #0056b3;
+        div > div {
+            flex-direction: column; /* Stack name and points vertically */
+            align-items: flex-start; /* Align to the left when stacked */
         }
-
-	input[type="text"] {
-            padding: 10px;
-            margin: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
-            width: 250px; /* Adjust width as needed */
-            box-sizing: border-box; /* Include padding and border in width */
+        div > div label[style*="margin-left"] {
+            margin-left: 0 !important; /* Remove specific margin on small screens */
+            margin-top: 5px; /* Add some space if stacked */
         }
-
-label {
-  font-size: 22px; /* Match the font size of the text box */
-  margin-right: 5px; /* Add some spacing to the right of the label */
-}
-
-
-input[type="radio"] {
-  margin: 5px; /* Add some margin around the radio button */
-  /* You might want to adjust width and height for better visual consistency, but it can be tricky with default radio buttons */
-}
+    }
 </style>
 </head>
 <body>
-   <h1><center>SMCA Player of the Season points</h1>
+    <h1>SMCA Player of the Season Points</h1>
 
-	<form id="customForm">
-
-				  
+    <form id="customForm">
         <label for="region">Division:</label>
         <select id="region" name="entry.710054407">
-			<option value="">Select your team Division</option>
+            <option value="">Select your team Division</option>
             <option value="Division 1">Division 1</option>
             <option value="Division 2">Division 2</option>
-	        <option value="Division 3">Division 3</option>
+            <option value="Division 3">Division 3</option>
             <option value="Division 4">Division 4</option>
             <option value="Division 5">Division 5</option>
             <option value="Division 6">Division 6</option>
@@ -100,22 +191,22 @@ input[type="radio"] {
             <option value="Division 8">Division 8</option>
             <option value="Division 9">Division 9</option>
             <option value="Division 10">Division 10</option>
-	    <option value="Division 11">Division 11</option>
-	    <option value="Division 12">Division 12</option>
-	    <option value="Division 13">Division 13</option>
-	    <option value="Division 14">Division 14</option>
-	    <option value="Division 15">Division 15</option>
-	    <option value="Division 16">Division 16</option>
-	    <option value="Division 17">Division 17</option>
-	    <option value="Division 18">Division 18</option>
-	    <option value="Division 19">Division 19</option>
-	    <option value="Division 20">Division 20</option>
-	    <option value="Division 21">Division 21</option>
-	    <option value="Division 22">Division 22</option>
-	    <option value="Division 23">Division 23</option>
-	    <option value="Division 24">Division 24</option>
-	    <option value="Division 25">Division 25</option>
-	    <option value="Division 26">Division 26</option>
+            <option value="Division 11">Division 11</option>
+            <option value="Division 12">Division 12</option>
+            <option value="Division 13">Division 13</option>
+            <option value="Division 14">Division 14</option>
+            <option value="Division 15">Division 15</option>
+            <option value="Division 16">Division 16</option>
+            <option value="Division 17">Division 17</option>
+            <option value="Division 18">Division 18</option>
+            <option value="Division 19">Division 19</option>
+            <option value="Division 20">Division 20</option>
+            <option value="Division 21">Division 21</option>
+            <option value="Division 22">Division 22</option>
+            <option value="Division 23">Division 23</option>
+            <option value="Division 24">Division 24</option>
+            <option value="Division 25">Division 25</option>
+            <option value="Division 26">Division 26</option>
         </select>
         <br><br>
 
@@ -123,14 +214,14 @@ input[type="radio"] {
         <select id="team" name="entry.524307792">
             <option value="">Select a team</option>
         </select>
-	<br><br>
+        <br><br>
 
-      <label for="round">Round:</label>
+        <label for="round">Round:</label>
         <select id="round" name="round">
-			<option value="">Select Round</option>
+            <option value="">Select Round</option>
             <option value="Round 1">Round 1</option>
             <option value="Round 2">Round 2</option>
-			<option value="Round 3">Round 3</option>
+            <option value="Round 3">Round 3</option>
             <option value="Round 4">Round 4</option>
             <option value="Round 5">Round 5</option>
             <option value="Round 6">Round 6</option>
@@ -138,47 +229,44 @@ input[type="radio"] {
         </select>
         <br><br>
 
-       <label for="match">Match:</label>
+        <label for="match">Match:</label>
         <select id="match" name="match">
             <option value="">Select a Match</option>
         </select>
-	<br><br>
+        <br><br>
 
-	
-  <hr>
-<div>
-  <h3>Player awarded with 3 points</h3>
-  <div style="display: flex; align-items: center;">
-    <label for="player1Name" style="margin-right: 10px;">Name:</label>
-    <input type="text" id="player1Name" name="player1Name">
-    <label style="margin-left: 20px; margin-right: 5px;">  3 Points</label>
-   
-  </div>
-</div>
+        <hr>
+        <div>
+            <h3>Player awarded with 3 points</h3>
+            <div style="display: flex; align-items: center;">
+                <label for="player1Name" style="margin-right: 10px;">Name:</label>
+                <input type="text" id="player1Name" name="player1Name">
+                <label style="margin-left: 20px; margin-right: 5px;">3 Points</label>
+            </div>
+        </div>
 
-<hr>
+        <hr>
 
-<div>
-  <h3>Player awarded with 2 points</h3>
-  <div style="display: flex; align-items: center;">
-    <label for="player2Name" style="margin-right: 10px;">Name:</label>
-    <input type="text" id="player2Name" name="player2Name">
-    <label style="margin-left: 20px; margin-right: 5px;">  2 Points</label>
-  </div>
-</div>
+        <div>
+            <h3>Player awarded with 2 points</h3>
+            <div style="display: flex; align-items: center;">
+                <label for="player2Name" style="margin-right: 10px;">Name:</label>
+                <input type="text" id="player2Name" name="player2Name">
+                <label style="margin-left: 20px; margin-right: 5px;">2 Points</label>
+            </div>
+        </div>
 
-<hr>
+        <hr>
 
-<div>
-  <h3>Player awarded with 1 point</h3>
-  <div style="display: flex; align-items: center;">
-    <label for="player3Name" style="margin-right: 10px;">Name:</label>
-    <input type="text" id="player3Name" name="player3Name">
-    <label style="margin-left: 20px; margin-right: 5px;"> 1 Point</label>
-  </div>
-</div>
-<hr>
-	
+        <div>
+            <h3>Player awarded with 1 point</h3>
+            <div style="display: flex; align-items: center;">
+                <label for="player3Name" style="margin-right: 10px;">Name:</label>
+                <input type="text" id="player3Name" name="player3Name">
+                <label style="margin-left: 20px; margin-right: 5px;">1 Point</label>
+            </div>
+        </div>
+        <hr>
 
         <input type="submit" value="Submit">
     </form>
