@@ -3,6 +3,24 @@
 <head>
   <title>Google Apps Script Test</title>
 <style>
+	body {
+    position: relative;
+}
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('SMCA_logo.jpg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 50%; /* Adjust as needed */
+    opacity: 0.1; /* Adjust opacity */
+    z-index: -1; /* Ensures it stays behind content */
+    pointer-events: none; /* Allows clicks/interactions with content on top */
+}
 
 select {
             padding: 10px;
@@ -64,7 +82,7 @@ input[type="radio"] {
 </style>
 </head>
 <body>
-  
+   <h1><center>SMCA Player of the Season points</h1>
 
 	<form id="customForm">
 
