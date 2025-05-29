@@ -1,181 +1,276 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>SMCA Player of the Season Points</title>
-<style>
-    /* Global Styles and Reset */
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern, clean font */
-        margin: 0;
-        padding: 20px; /* Add some padding around the content */
-        background-color: #f4f7f6; /* Light background for a clean feel */
-        color: #333; /* Default text color */
-        line-height: 1.6; /* Better readability */
-        position: relative; /* Needed for pseudo-element watermark */
-        min-height: 100vh; /* Ensure body takes full viewport height */
-        display: flex;
-        flex-direction: column; /* Stack content vertically */
-        align-items: center; /* Center content horizontally */
-    }
-
-    /* Watermark for Logo */
-    body::before {
-        content: "";
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-image: url('SMCA_logo.jpg'); /* Ensure this path is correct */
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-size: 40%; /* Slightly smaller, adjust as needed */
-        opacity: 0.20; /* Slightly more subtle, adjust as needed */
-        z-index: -1;
-        pointer-events: none;
-    }
-
-    /* Main Heading */
-    h1 {
-        text-align: center;
-        color: #2c3e50; /* A darker, professional blue-gray */
-        font-size: 2.8em; /* Prominent size */
-        margin-top: 30px;
-        margin-bottom: 40px;
-        letter-spacing: 1px; /* A little breathing room for letters */
-        text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
-    }
-
-    /* Form Container Styling */
-    #customForm {
-        background-color: rgba(255, 255, 255, 0.45);
-        padding: 40px;
-        border-radius: 10px; /* Softer rounded corners */
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* More pronounced, soft shadow */
-        width: 100%;
-        max-width: 600px; /* Limit form width for better readability on large screens */
-        box-sizing: border-box;
-        margin-bottom: 40px; /* Space below the form */
-    }
-
-    /* Labels */
-    label {
-        display: block; /* Ensures label is on its own line */
-        margin-top: 15px; /* More space above labels */
-        margin-bottom: 8px; /* Space between label and input */
-        font-weight: bold;
-        font-size: 1.1em; /* Slightly larger labels */
-        color: #555; /* Softer label color */
-    }
-
-    /* Select and Text Inputs */
-    select,
-    input[type="text"] {
-        width: calc(100% - 22px); /* Full width minus padding and border */
-        padding: 12px; /* More padding inside inputs */
-        margin: 5px 0; /* Consistent margin */
-        border: 1px solid #dcdcdc; /* Lighter, subtle border */
-        border-radius: 6px; /* Slightly more rounded */
-        font-size: 1em; /* Consistent font size */
-        box-sizing: border-box;
-        transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transitions */
-    }
-
-    select:focus,
-    input[type="text"]:focus {
-        outline: none;
-        border-color: #007bff; /* Primary brand color for focus */
-        box-shadow: 0 0 8px rgba(0, 123, 255, 0.3); /* Softer, wider shadow on focus */
-    }
-
-    /* Submit Button */
-    input[type="submit"] {
-        padding: 12px 25px; /* More padding */
-        background-color: #007bff; /* Primary brand color */
-        color: white;
-        border: none;
-        border-radius: 6px;
-        font-size: 1.1em; /* Slightly larger text */
-        cursor: pointer;
-        margin-top: 30px; /* More space above button */
-        width: auto; /* Allow button to size to content */
-        display: block; /* Make it a block element */
-        margin-left: auto; /* Center button */
-        margin-right: auto; /* Center button */
-        transition: background-color 0.3s ease; /* Smooth hover effect */
-    }
-
-    input[type="submit"]:hover {
-        background-color: #0056b3; /* Darker shade on hover */
-        transform: translateY(-2px); /* Slight lift on hover */
-        box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* Add shadow on hover */
-    }
-
-    /* Horizontal Rules (Dividers) */
-    hr {
-        border: none;
-        border-top: 1px solid #eee; /* Lighter, more subtle line */
-        margin: 30px 0; /* More vertical space */
-    }
-
-    /* Player Award Sections */
-    div h3 {
-        color: #4a4a4a; /* Slightly darker than body text */
-        font-size: 1.3em;
-        margin-bottom: 15px; /* Space below heading */
-    }
-
-    div > div { /* For the flex containers around player name/points */
-        display: flex;
-        align-items: center;
-        gap: 15px; /* Space between input and points label */
-        flex-wrap: wrap; /* Allow wrapping on smaller screens */
-    }
-
-    /* Specific Player Name Labels */
-    div > div label {
-        margin-top: 0; /* Remove top margin for labels in flex */
-        margin-bottom: 0; /* Remove bottom margin for labels in flex */
-        font-weight: normal; /* Make these labels less bold */
-        font-size: 1em; /* Adjust font size */
-    }
-
-    /* Player Points Label */
-    div > div label[style*="margin-left"] { /* Targeting the points label specifically */
-        font-weight: bold;
-        color: #007bff; /* Highlight points with the brand color */
-        font-size: 1.1em;
-    }
-
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
+    <title>SMCA POS points & Honors</title>
+    <style>
+        /* Global Styles and Reset */
         body {
-            padding: 10px;
-        }
-        h1 {
-            font-size: 2em;
-            margin-bottom: 30px;
-        }
-        #customForm {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
             padding: 20px;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
+
+        /* Watermark for Logo */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('SMCA_logo.jpg'); /* Ensure this path is correct */
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 40%;
+            opacity: 0.20;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Main Heading */
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 2.8em;
+            margin-top: 30px;
+            margin-bottom: 40px;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+
+        /* Form Container Styling */
+        #customForm {
+            background-color: rgba(255, 255, 255, 0.85);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            box-sizing: border-box;
+            margin-bottom: 40px;
+        }
+
+        /* Labels */
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 8px;
+            font-weight: bold; /* All general labels are bold */
+            font-size: 1.1em;
+            color: #555;
+        }
+
+        /* Select and Text Inputs */
         select,
         input[type="text"] {
-            width: 100%; /* Take full width on smaller screens */
+            width: calc(100% - 22px);
+            padding: 12px;
+            margin: 5px 0;
+            border: 1px solid #dcdcdc;
+            border-radius: 6px;
+            font-size: 1em;
+            box-sizing: border-box;
+            transition: border-color 0.3s, box-shadow 0.3s;
         }
-        div > div {
-            flex-direction: column; /* Stack name and points vertically */
-            align-items: flex-start; /* Align to the left when stacked */
+
+        select:focus,
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
         }
-        div > div label[style*="margin-left"] {
-            margin-left: 0 !important; /* Remove specific margin on small screens */
-            margin-top: 5px; /* Add some space if stacked */
+
+        /* Submit Button */
+        input[type="submit"] {
+            padding: 12px 25px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1em;
+            cursor: pointer;
+            margin-top: 30px;
+            width: auto;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
         }
-    }
-</style>
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        /* Submit Button - Loading State */
+        input[type="submit"]:disabled,
+        input[type="submit"].loading {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+            pointer-events: none;
+        }
+
+
+        /* Horizontal Rules (Dividers) */
+        hr {
+            border: none;
+            border-top: 1px solid #eee;
+            margin: 30px 0;
+        }
+
+        /* Player Award Sections - General styles for text boxes */
+        .player-award-section h3 {
+            color: #4a4a4a;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+
+        .player-award-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .player-award-input-group div {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        /* Labels INSIDE player-award-input-group - making them bold */
+        .player-award-input-group label {
+            margin-top: 0;
+            margin-bottom: 0;
+            /* Removed font-weight: normal; here, so it inherits bold from general label rule */
+            font-size: 1em; /* Keep specific font-size */
+        }
+
+
+        /* Player Points Label (for 3, 2, 1 points) */
+        .player-points-label {
+            font-weight: bold;
+            color: #007bff;
+            font-size: 1.1em;
+        }
+
+        /* --- Tab Styles --- */
+        .tabs {
+            overflow: hidden;
+            border-bottom: 1px solid #ccc;
+            background-color: #f1f1f1;
+            display: flex;
+            margin-top: 20px;
+            margin-bottom: 0;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        .tab-button {
+            background-color: inherit;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 17px;
+            font-weight: bold; /* Make tab text bold */
+            flex-grow: 1;
+            text-align: center;
+            color: #555;
+            border-right: 1px solid #eee;
+        }
+
+        .tab-button:last-child {
+            border-right: none;
+        }
+
+        .tab-button:hover {
+            background-color: #ddd;
+        }
+
+        .tab-button.active {
+            background-color: #007bff;
+            color: white;
+            border-bottom: 1px solid #007bff;
+        }
+
+        .tab-content-container {
+            border: 1px solid #ccc;
+            border-top: none;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            min-height: 200px;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            h1 {
+                font-size: 2em;
+                margin-bottom: 30px;
+            }
+            #customForm {
+                padding: 20px;
+            }
+            select,
+            input[type="text"] {
+                width: 100%;
+            }
+            .player-award-input-group div {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .player-award-input-group label[style*="margin-left"] {
+                margin-left: 0 !important;
+                margin-top: 5px;
+            }
+            .tabs {
+                flex-wrap: wrap;
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+            }
+            .tab-button {
+                flex-basis: 50%;
+                border-bottom: 1px solid #eee;
+                border-right: 1px solid #eee;
+                box-sizing: border-box;
+            }
+            .tab-button:nth-child(even) {
+                border-right: none;
+            }
+            .tab-button:last-child {
+                border-bottom: none;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>SMCA Player of the Season Points</h1>
+    <h1>SMCA POS points & Honors</h1>
 
     <form id="customForm">
         <label for="region">Division:</label>
@@ -236,34 +331,108 @@
         <br><br>
 
         <hr>
-        <div>
-            <h3>Player awarded with 3 points</h3>
-            <div style="display: flex; align-items: center;">
-                <label for="player1Name" style="margin-right: 10px;">Name:</label>
-                <input type="text" id="player1Name" name="player1Name">
-                <label style="margin-left: 20px; margin-right: 5px;">3 Points</label>
-            </div>
+
+        <div class="tabs">
+            <button type="button" class="tab-button active" onclick="openTab(event, 'playerPointsTab')">Player of the Season Points</button>
+            <button type="button" class="tab-button" onclick="openTab(event, 'fiveWicketHaulTab')">5 Wicket Haul</button>
+            <button type="button" class="tab-button" onclick="openTab(event, 'hatTrickTab')">Hat Trick</button>
+            <button type="button" class="tab-button" onclick="openTab(event, 'centuryTab')">Century</button>
         </div>
 
-        <hr>
+        <div class="tab-content-container">
+            <div id="playerPointsTab" class="tab-content active">
+                <div class="player-award-section">
+                    <h3>Player awarded with 3 points</h3>
+                    <div class="player-award-input-group">
+                        <div>
+                            <label for="player1Name">Name:</label>
+                            <input type="text" id="player1Name" name="player1Name">
+                            <label class="player-points-label">3 Points</label>
+                        </div>
+                    </div>
+                </div>
 
-        <div>
-            <h3>Player awarded with 2 points</h3>
-            <div style="display: flex; align-items: center;">
-                <label for="player2Name" style="margin-right: 10px;">Name:</label>
-                <input type="text" id="player2Name" name="player2Name">
-                <label style="margin-left: 20px; margin-right: 5px;">2 Points</label>
+                <div class="player-award-section">
+                    <h3>Player awarded with 2 points</h3>
+                    <div class="player-award-input-group">
+                        <div>
+                            <label for="player2Name">Name:</label>
+                            <input type="text" id="player2Name" name="player2Name">
+                            <label class="player-points-label">2 Points</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="player-award-section">
+                    <h3>Player awarded with 1 point</h3>
+                    <div class="player-award-input-group">
+                        <div>
+                            <label for="player3Name">Name:</label>
+                            <input type="text" id="player3Name" name="player3Name">
+                            <label class="player-points-label">1 Point</label>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
 
-        <hr>
+            <div id="fiveWicketHaulTab" class="tab-content">
+                <div class="player-award-section">
+                    <h3>Player with 5 Wicket Haul</h3>
+                    <div class="player-award-input-group">
+                        <div>
+                            <label for="fiveWicketHaulPlayer">Name:</label>
+                            <input type="text" id="fiveWicketHaulPlayer" name="fiveWicketHaulPlayer">
+                        </div>
+                        <div>
+                            <label for="fiveWicketHaulFigures">Bowling Figures (e.g., 5/30):</label>
+                            <input type="text" id="fiveWicketHaulFigures" name="fiveWicketHaulFigures">
+                        </div>
+                        <div>
+                            <label for="fiveWicketHaulGround">Ground Name:</label>
+                            <input type="text" id="fiveWicketHaulGround" name="fiveWicketHaulGround">
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-        <div>
-            <h3>Player awarded with 1 point</h3>
-            <div style="display: flex; align-items: center;">
-                <label for="player3Name" style="margin-right: 10px;">Name:</label>
-                <input type="text" id="player3Name" name="player3Name">
-                <label style="margin-left: 20px; margin-right: 5px;">1 Point</label>
+            <div id="hatTrickTab" class="tab-content">
+                <div class="player-award-section">
+                    <h3>Player with a Hat Trick</h3>
+                    <div class="player-award-input-group">
+                        <div>
+                            <label for="hatTrickPlayer">Name:</label>
+                            <input type="text" id="hatTrickPlayer" name="hatTrickPlayer">
+                        </div>
+                        <div>
+                            <label for="hatTrickFigures">Bowling Figures (e.g., 3/15):</label>
+                            <input type="text" id="hatTrickFigures" name="hatTrickFigures">
+                        </div>
+                        <div>
+                            <label for="hatTrickGround">Ground Name:</label>
+                            <input type="text" id="hatTrickGround" name="hatTrickGround">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="centuryTab" class="tab-content">
+                <div class="player-award-section">
+                    <h3>Player with a Century</h3>
+                    <div class="player-award-input-group">
+                        <div>
+                            <label for="centuryPlayer">Name:</label>
+                            <input type="text" id="centuryPlayer" name="centuryPlayer">
+                        </div>
+                        <div>
+                            <label for="centuryScore">Batsman Score (e.g., 105*):</label>
+                            <input type="text" id="centuryScore" name="centuryScore">
+                        </div>
+                        <div>
+                            <label for="centuryGround">Ground Name:</label>
+                            <input type="text" id="centuryGround" name="centuryGround">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <hr>
@@ -271,185 +440,279 @@
         <input type="submit" value="Submit">
     </form>
 
-  <script>
+    <script>
+        let MatchesBasedOnRoundsDataCache = [];
+        let divisionTeamsDataCache = [];
 
-		let MatchesBasedOnRoundsDataCache = []; 
-		let divisionTeamsDataCache = [];
+        // Function to handle tab switching
+        function openTab(evt, tabName) {
+            var i, tabcontent, tabbuttons;
 
-//listofmatchesbasedonround
-function populateTeamDropdown(teamsDataCache) {
-  const teamDropdownElement = document.getElementById('team');
-  teamDropdownElement.innerHTML = '<option value="">Loading teams...</option>';
-  teamDropdownElement.disabled = true;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
 
-  // Clear existing options
-  teamDropdownElement.innerHTML = '';
+            tabbuttons = document.getElementsByClassName("tab-button");
+            for (i = 0; i < tabbuttons.length; i++) {
+                tabbuttons[i].classList.remove("active");
+            }
 
-  // Add the default "Select a team" option
-  const defaultOption = document.createElement("option");
-  defaultOption.value = "";
-  defaultOption.text = "Select a team";
-  teamDropdownElement.add(defaultOption);
-
-  if (teamsDataCache && teamsDataCache.length > 0) {
-    teamDropdownElement.disabled = false; // Re-enable after adding the default
-
-    for (let i = 1; i < teamsDataCache.length; i++) {
-      if (teamsDataCache[i][0] == document.getElementById('region').value) {
-        const option = document.createElement("option");
-        option.text = teamsDataCache[i][1];
-        option.value = teamsDataCache[i][1];
-        teamDropdownElement.add(option);
-      }
-    }
-    if (teamDropdownElement.options.length <= 1) {
-      const noTeamsOption = document.createElement("option");
-      noTeamsOption.value = "";
-      noTeamsOption.text = "No teams in this division";
-      teamDropdownElement.add(noTeamsOption);
-      teamDropdownElement.disabled = true;
-    }
-  } else {
-    const noTeamsOption = document.createElement("option");
-    noTeamsOption.value = "";
-    noTeamsOption.text = "No team data available";
-    teamDropdownElement.add(noTeamsOption);
-    teamDropdownElement.disabled = true;
-  }
-};
-        
-	
-function updateRounds(MatchesBasedOnRoundsDataCache) {
-  const matchDropdownElement = document.getElementById('match');
-  matchDropdownElement.innerHTML = '<option value="">Loading matches...</option>';
-  matchDropdownElement.disabled = true;
-
-  const selectedRound = document.getElementById('round').value;
-
-  if (MatchesBasedOnRoundsDataCache) {
-    // Clear existing options (including the loading message)
-    matchDropdownElement.innerHTML = '';
-
-    // Add the default "Select a Match" option
-    const defaultOption = document.createElement("option");
-    defaultOption.value = "";
-    defaultOption.text = "Select a Match";
-    matchDropdownElement.add(defaultOption);
-
-    let hasMatches = false;
-    matchDropdownElement.disabled = false; // Re-enable now that the default is added
-
-    for (const key in MatchesBasedOnRoundsDataCache) {
-      if (MatchesBasedOnRoundsDataCache.hasOwnProperty(key)) {
-        const matchInfo = MatchesBasedOnRoundsDataCache[key];
-        if (matchInfo && matchInfo[0] === selectedRound) {
-          const option = document.createElement("option");
-          option.text = matchInfo[1];
-          option.value = matchInfo[1];
-          matchDropdownElement.add(option);
-          hasMatches = true;
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
         }
-      }
-    }
 
-    if (!hasMatches) {
-      const noMatchesOption = document.createElement("option");
-      noMatchesOption.value = "";
-      noMatchesOption.text = "No matches for this round";
-      matchDropdownElement.add(noMatchesOption);
-      matchDropdownElement.disabled = true;
-    }
-  } else {
-    matchDropdownElement.innerHTML = '<option value="">No match data available</option>';
-    matchDropdownElement.disabled = true;
-  }
-}
+        // --- Existing JavaScript functions ---
+        function populateTeamDropdown(teamsDataCache) {
+            const teamDropdownElement = document.getElementById('team');
+            teamDropdownElement.innerHTML = '<option value="">Loading teams...</option>';
+            teamDropdownElement.disabled = true;
+
+            teamDropdownElement.innerHTML = '';
+            const defaultOption = document.createElement("option");
+            defaultOption.value = "";
+            defaultOption.text = "Select a team";
+            teamDropdownElement.add(defaultOption);
+
+            if (teamsDataCache && teamsDataCache.length > 0) {
+                teamDropdownElement.disabled = false;
+                for (let i = 1; i < teamsDataCache.length; i++) {
+                    if (teamsDataCache[i][0] == document.getElementById('region').value) {
+                        const option = document.createElement("option");
+                        option.text = teamsDataCache[i][1];
+                        option.value = teamsDataCache[i][1];
+                        teamDropdownElement.add(option);
+                    }
+                }
+                if (teamDropdownElement.options.length <= 1) {
+                    const noTeamsOption = document.createElement("option");
+                    noTeamsOption.value = "";
+                    noTeamsOption.text = "No teams in this division";
+                    teamDropdownElement.add(noTeamsOption);
+                    teamDropdownElement.disabled = true;
+                }
+            } else {
+                const noTeamsOption = document.createElement("option");
+                noTeamsOption.value = "";
+                noTeamsOption.text = "No team data available";
+                teamDropdownElement.add(noTeamsOption);
+                teamDropdownElement.disabled = true;
+            }
+        };
+
+        function updateRounds(MatchesBasedOnRoundsDataCache) {
+            const matchDropdownElement = document.getElementById('match');
+            matchDropdownElement.innerHTML = '<option value="">Loading matches...</option>';
+            matchDropdownElement.disabled = true;
+
+            const selectedRound = document.getElementById('round').value;
+
+            if (MatchesBasedOnRoundsDataCache && selectedRound !== "") {
+                matchDropdownElement.innerHTML = '';
+                const defaultOption = document.createElement("option");
+                defaultOption.value = "";
+                defaultOption.text = "Select a Match";
+                matchDropdownElement.add(defaultOption);
+
+                let hasMatches = false;
+                matchDropdownElement.disabled = false;
+
+                for (const key in MatchesBasedOnRoundsDataCache) {
+                    if (MatchesBasedOnRoundsDataCache.hasOwnProperty(key)) {
+                        const matchInfo = MatchesBasedOnRoundsDataCache[key];
+                        if (matchInfo && matchInfo[0] === selectedRound) {
+                            const option = document.createElement("option");
+                            option.text = matchInfo[1];
+                            option.value = matchInfo[1];
+                            matchDropdownElement.add(option);
+                            hasMatches = true;
+                        }
+                    }
+                }
+
+                if (!hasMatches) {
+                    const noMatchesOption = document.createElement("option");
+                    noMatchesOption.value = "";
+                    noMatchesOption.text = "No matches for this round";
+                    matchDropdownElement.add(noMatchesOption);
+                    matchDropdownElement.disabled = true;
+                }
+            } else {
+                matchDropdownElement.innerHTML = '<option value="">Select a Round first</option>';
+                matchDropdownElement.disabled = true;
+            }
+        }
 
         document.getElementById('region').addEventListener('change', (event) => {
-		
-		const selectedRegion = event.target.value;
-		var sheetname = document.getElementById('region').value;
-		
-			// --- Loading for Team Dropdown ---
-			const teamDropdown = document.getElementById('team');
-			teamDropdown.innerHTML = '<option value="">Loading teams...</option>';
-			teamDropdown.disabled = true; // Optionally disable the dropdown
-  
-		if (selectedRegion) {
-			fetch('https://script.google.com/macros/s/AKfycby6Qr0P_w2xZ4dkvXRstQd2EqZZuF9YgtLcj2ufhMkVnRBDDM4FQ0Ktk0tle45_HEAq/exec' + '?sheetname=' + encodeURIComponent(sheetname))
-			.then(response => response.json())
-			.then(data => {
-			// Store team data (assuming your doGet returns teams filtered by division)
-			teamsDataCache = data.teams || [];
-			populateTeamDropdown(teamsDataCache);
-			teamDropdown.disabled = false; 
-	
+            const selectedRegion = event.target.value;
+            var sheetname = document.getElementById('region').value;
 
-        // Store division match data
-        MatchesBasedOnRoundsDataCache = data.listofmatchesbasedonround || [];
-		console.log('MatchesBasedOnRoundsDataCache:', MatchesBasedOnRoundsDataCache);
-        
-      })
-      .catch(error => console.error('Error fetching data:', error));
-  } else {
-    teamDropdown.innerHTML = '<option value="">Select a team</option>';
-    roundDropdown.innerHTML = '<option value="">Select a round</option>';
-    matchDropdown.innerHTML = '<option value="">Select a match</option>';
-    teamsDataCache = [];
-    divisionMatchDataCache = [];
-  }
-});
+            const teamDropdown = document.getElementById('team');
+            teamDropdown.innerHTML = '<option value="">Loading teams...</option>';
+            teamDropdown.disabled = true;
+
+            const roundDropdown = document.getElementById('round');
+            const matchDropdown = document.getElementById('match');
+            roundDropdown.selectedIndex = 0;
+            matchDropdown.innerHTML = '<option value="">Select a Round first</option>';
+            matchDropdown.disabled = true;
 
 
+            if (selectedRegion) {
+                fetch('https://script.google.com/macros/s/AKfycby6Qr0P_w2xZ4dkvXRstQd2EqZZuF9YgtLcj2ufhMkVnRBDDM4FQ0Ktk0tle45_HEAq/exec' + '?sheetname=' + encodeURIComponent(sheetname))
+                    .then(response => response.json())
+                    .then(data => {
+                        teamsDataCache = data.teams || [];
+                        populateTeamDropdown(teamsDataCache);
+                        teamDropdown.disabled = false;
+
+                        MatchesBasedOnRoundsDataCache = data.listofmatchesbasedonround || [];
+                        console.log('MatchesBasedOnRoundsDataCache:', MatchesBasedOnRoundsDataCache);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching data:', error);
+                        teamDropdown.innerHTML = '<option value="">Error loading teams</option>';
+                        teamDropdown.disabled = false;
+                        matchDropdown.innerHTML = '<option value="">Error loading matches</option>';
+                        matchDropdown.disabled = false;
+                    });
+            } else {
+                teamDropdown.innerHTML = '<option value="">Select a team</option>';
+                teamDropdown.disabled = true;
+                roundDropdown.selectedIndex = 0;
+                matchDropdown.innerHTML = '<option value="">Select a Round first</option>';
+                matchDropdown.disabled = true;
+                MatchesBasedOnRoundsDataCache = [];
+            }
+        });
+
+        document.getElementById('round').addEventListener('change', function() {
+            const matchDropdownElement1 = document.getElementById('match');
+            matchDropdownElement1.innerHTML = '<option value="">Loading matches....</option>';
+            matchDropdownElement1.disabled = true;
+            updateRounds(MatchesBasedOnRoundsDataCache);
+        });
 
 
-	document.getElementById('round').addEventListener('change', function() {
-	 const matchDropdownElement1 = document.getElementById('match');
-  matchDropdownElement1.innerHTML = '<option value="">Loading teams....</option>'; // Initial state
-  matchDropdownElement1.disabled = true; // Optionally disable
-  updateRounds(MatchesBasedOnRoundsDataCache);
-  matchDropdownElement1.disabled = false;
-});
+        document.getElementById('customForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const submitButton = event.submitter;
+            submitButton.disabled = true;
+            submitButton.classList.add('loading');
+
+            var region = document.getElementById('region').value;
+            var team = document.getElementById('team').value;
+            var roundNo = document.getElementById('round').value;
+            var teamVs = document.getElementById('match').value;
+
+            var threepointsplayer = document.getElementById('player1Name').value;
+            var twopointsplayer = document.getElementById('player2Name').value;
+            var onepointplayer = document.getElementById('player3Name').value;
+
+            var fiveWicketHaulPlayer = document.getElementById('fiveWicketHaulPlayer').value;
+            var fiveWicketHaulFigures = document.getElementById('fiveWicketHaulFigures').value;
+            var fiveWicketHaulGround = document.getElementById('fiveWicketHaulGround').value;
+
+            var hatTrickPlayer = document.getElementById('hatTrickPlayer').value;
+            var hatTrickFigures = document.getElementById('hatTrickFigures').value;
+            var hatTrickGround = document.getElementById('hatTrickGround').value;
+
+            var centuryPlayer = document.getElementById('centuryPlayer').value;
+            var centuryScore = document.getElementById('centuryScore').value;
+            var centuryGround = document.getElementById('centuryGround').value;
 
 
+            if (!region || !team || !roundNo || !teamVs) {
+                alert("Please fill in all the required fields (Division, Team, Round, Match).");
+                submitButton.disabled = false;
+                submitButton.classList.remove('loading');
+                return;
+            }
 
-    document.getElementById('customForm').addEventListener('submit', function() {
-	event.preventDefault();
+            let formData = new URLSearchParams();
+            formData.append('region', region);
+            formData.append('team', team);
+            formData.append('roundNo', roundNo);
+            formData.append('match', teamVs);
 
-	     var region = document.getElementById('region').value;
-     	 var team = document.getElementById('team').value;
-	     var roundNo = document.getElementById('round').value;
-         var teamVs = document.getElementById('match').value;
-         var threepointsplayer = document.getElementById('player1Name').value;
-         var twopointsplayer = document.getElementById('player2Name').value;
-         var onepointplayer = document.getElementById('player3Name').value;
+            formData.append('threepointsplayer', threepointsplayer);
+            formData.append('twopointsplayer', twopointsplayer);
+            formData.append('onepointplayer', onepointplayer);
 
+            formData.append('fiveWicketHaulPlayer', fiveWicketHaulPlayer);
+            formData.append('fiveWicketHaulFigures', fiveWicketHaulFigures);
+            formData.append('fiveWicketHaulGround', fiveWicketHaulGround);
 
-      fetch('https://script.google.com/macros/s/AKfycbwuSozhn9zsMr4MauQl4tEX8Io-WLb5Lr6Ff-w0uc5a1cF6YAIbaJ01TLx30-KXlxrd/exec', { // Replace with your script URL
-        method: 'POST',
-        mode: 'cors',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: 'region=' + encodeURIComponent(region) + '&team=' + encodeURIComponent(team)+ '&roundNo=' + encodeURIComponent(roundNo) + '&match=' + encodeURIComponent(teamVs) + '&threepointsplayer=' +  encodeURIComponent(threepointsplayer) + '&twopointsplayer=' +  encodeURIComponent(twopointsplayer) + '&onepointplayer=' +  encodeURIComponent(onepointplayer)// URL-encoded parameters
-      })
-      .then(response => response.text())
-      .then(data => {
-        console.log(data); // Log the response
-        alert(data); // Alert the response
-		 document.getElementById('round').selectedIndex = 0; 
-		 document.getElementById('region').selectedIndex = 0;
-		 document.getElementById('player1Name').value = '';
-		 document.getElementById('player2Name').value = '';
-		 document.getElementById('player3Name').value = '';
-		 document.getElementById('team').selectedIndex = 0;
-		 document.getElementById('match').selectedIndex = 0;
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        alert('An error occurred.');
-      });
-    });
-  </script>
+            formData.append('hatTrickPlayer', hatTrickPlayer);
+            formData.append('hatTrickFigures', hatTrickFigures);
+            formData.append('hatTrickGround', hatTrickGround);
+
+            formData.append('centuryPlayer', centuryPlayer);
+            formData.append('centuryScore', centuryScore);
+            formData.append('centuryGround', centuryGround);
+
+            fetch('https://script.google.com/macros/s/AKfycbwuSozhn9zsMr4MauQl4tEX8Io-WLb5Lr6Ff-w0uc5a1cF6YAIbaJ01TLx30-KXlxrd/exec', {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: formData.toString()
+                })
+                .then(response => response.text())
+                .then(data => {
+                    console.log(data);
+                    alert(data);
+
+                    document.getElementById('region').selectedIndex = 0;
+                    document.getElementById('round').selectedIndex = 0;
+
+                    document.getElementById('player1Name').value = '';
+                    document.getElementById('player2Name').value = '';
+                    document.getElementById('player3Name').value = '';
+                    document.getElementById('fiveWicketHaulPlayer').value = '';
+                    document.getElementById('fiveWicketHaulFigures').value = '';
+                    document.getElementById('fiveWicketHaulGround').value = '';
+                    document.getElementById('hatTrickPlayer').value = '';
+                    document.getElementById('hatTrickFigures').value = '';
+                    document.getElementById('hatTrickGround').value = '';
+                    document.getElementById('centuryPlayer').value = '';
+                    document.getElementById('centuryScore').value = '';
+                    document.getElementById('centuryGround').value = '';
+
+                    const teamDropdownOnSubmit = document.getElementById('team');
+                    teamDropdownOnSubmit.innerHTML = '<option value="">Select a team</option>';
+                    teamDropdownOnSubmit.disabled = true;
+
+                    const matchDropdownOnSubmit = document.getElementById('match');
+                    matchDropdownOnSubmit.innerHTML = '<option value="">Select a Round first</option>';
+                    matchDropdownOnSubmit.disabled = true;
+
+                    MatchesBasedOnRoundsDataCache = [];
+                    divisionTeamsDataCache = [];
+
+                    document.querySelector('.tab-button.active').classList.remove('active');
+                    document.querySelector('.tab-content.active').classList.remove('active');
+                    document.querySelector('.tab-button').classList.add('active');
+                    document.getElementById('playerPointsTab').classList.add('active');
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred. Please try again.');
+                })
+                .finally(() => {
+                    submitButton.disabled = false;
+                    submitButton.classList.remove('loading');
+                });
+        });
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const firstTabButton = document.querySelector('.tab-button');
+            if (firstTabButton) {
+                firstTabButton.click();
+            }
+        });
+    </script>
 </body>
 </html>
