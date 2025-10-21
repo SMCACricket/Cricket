@@ -29,11 +29,43 @@
 
         /* Modal specific styles */
         .modal {
+            /* Keep initial state hidden/invisible */
+            opacity: 0;
+            visibility: hidden;
             transition: opacity 0.3s ease, visibility 0.3s ease;
         }
+        
         .modal-active {
             opacity: 1;
             visibility: visible;
+        }
+        
+        /* Inner content animation classes */
+        .modal-content-transition {
+            transition: transform 0.3s ease;
+        }
+
+        /* Spinner for loading state */
+        .loading {
+            position: relative;
+            pointer-events: none;
+        }
+        .loading::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 1.5rem;
+            height: 1.5rem;
+            margin-top: -0.75rem;
+            margin-left: -0.75rem;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #ffffff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -231,9 +263,10 @@
         </form>
     </div>
 
-    <!-- Custom Modal for Alerts -->
-    <div id="custom-modal" class="modal fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 opacity-0 invisible z-50">
-        <div class="bg-gray-800 text-gray-100 rounded-lg p-8 m-4 max-w-sm w-full shadow-2xl transform scale-95 transition-all duration-300 ease-in-out">
+    <!-- Custom Modal for Alerts (Message Display Fix v2) -->
+    <!-- The modal now starts with display:none and is controlled by JS -->
+    <div id="custom-modal" class="modal fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-50" style="display: none;">
+        <div id="modal-content-box" class="bg-gray-800 text-gray-100 rounded-lg p-8 m-4 max-w-sm w-full shadow-2xl transform scale-95 modal-content-transition">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-xl font-bold text-white">Notification</h3>
                 <button id="close-modal-btn" class="text-gray-400 hover:text-white transition-colors">&times;</button>
@@ -251,17 +284,41 @@
         let MatchesBasedOnRoundsDataCache = [];
         let divisionTeamsDataCache = [];
 
-        // --- Custom Modal Functions ---
+        // --- Custom Modal Functions (CRITICAL FIX) ---
         function showCustomModal(message) {
             const modal = document.getElementById('custom-modal');
+            const modalContent = document.getElementById('modal-content-box');
             const modalMessage = document.getElementById('modal-message');
+            
             modalMessage.textContent = message;
+            
+            // 1. Ensure the container is displayed immediately (bypassing visibility:hidden initial state)
+            modal.style.display = 'flex'; 
+
+            // 2. Force reflow/redraw (important for transition to work immediately after display change)
+            void modal.offsetWidth; 
+
+            // 3. Apply opacity and scale-up classes
             modal.classList.add('modal-active');
+            modalContent.classList.remove('scale-95');
+            modalContent.classList.add('scale-100');
         }
 
         function closeCustomModal() {
             const modal = document.getElementById('custom-modal');
+            const modalContent = document.getElementById('modal-content-box');
+            
+            // 1. Animate the content box (scale down)
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+
+            // 2. Remove opacity/visibility classes
             modal.classList.remove('modal-active');
+
+            // 3. Hide the container completely after the transition time (300ms)
+            setTimeout(() => {
+                 modal.style.display = 'none';
+            }, 300); 
         }
 
         // Event listeners for the modal
@@ -305,6 +362,7 @@
             if (teamsDataCache && teamsDataCache.length > 0) {
                 teamDropdownElement.disabled = false;
                 for (let i = 1; i < teamsDataCache.length; i++) {
+                    // NOTE: Assumes teamsDataCache[i][0] holds the division name
                     if (teamsDataCache[i][0] == document.getElementById('region').value) {
                         const option = document.createElement("option");
                         option.text = teamsDataCache[i][1];
@@ -348,6 +406,7 @@
                 for (const key in MatchesBasedOnRoundsDataCache) {
                     if (MatchesBasedOnRoundsDataCache.hasOwnProperty(key)) {
                         const matchInfo = MatchesBasedOnRoundsDataCache[key];
+                         // NOTE: Assumes matchInfo[0] holds the round name and matchInfo[1] holds the match name
                         if (matchInfo && matchInfo[0] === selectedRound) {
                             const option = document.createElement("option");
                             option.text = matchInfo[1];
@@ -387,6 +446,9 @@
 
 
             if (selectedRegion) {
+                 // Add a loading effect on the region dropdown to indicate data fetching
+                event.target.classList.add('loading-border'); 
+
                 fetch('https://script.google.com/macros/s/AKfycby6Qr0P_w2xZ4dkvXRstQd2EqZZuF9YgtLcj2ufhMkVnRBDDM4FQ0Ktk0tle45_HEAq/exec' + '?sheetname=' + encodeURIComponent(sheetname))
                     .then(response => response.json())
                     .then(data => {
@@ -399,10 +461,15 @@
                     })
                     .catch(error => {
                         console.error('Error fetching data:', error);
+                        // Using the fixed modal function
+                        showCustomModal('Error loading team or match data. Check console for details.'); 
                         teamDropdown.innerHTML = '<option value="">Error loading teams</option>';
                         teamDropdown.disabled = false;
                         matchDropdown.innerHTML = '<option value="">Error loading matches</option>';
                         matchDropdown.disabled = false;
+                    })
+                    .finally(() => {
+                         event.target.classList.remove('loading-border');
                     });
             } else {
                 teamDropdown.innerHTML = '<option value="">Select a team</option>';
@@ -452,6 +519,7 @@
 
 
             if (!region || !team || !roundNo || !teamVs) {
+                // Using the fixed modal function
                 showCustomModal("Please fill in all the required fields (Division, Team, Round, Match).");
                 submitButton.disabled = false;
                 submitButton.classList.remove('loading');
@@ -490,8 +558,9 @@
                 })
                 .then(response => response.text())
                 .then(data => {
-                    console.log(data);
-                    showCustomModal(data);
+                    console.log("Success Response:", data);
+                    // Using the fixed modal function
+                    showCustomModal(data); 
 
                     document.getElementById('region').selectedIndex = 0;
                     document.getElementById('round').selectedIndex = 0;
@@ -535,7 +604,8 @@
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    showCustomModal('An error occurred. Please try again.');
+                    // Using the fixed modal function
+                    showCustomModal('An error occurred during submission. Please check your network and try again.');
                 })
                 .finally(() => {
                     submitButton.disabled = false;
